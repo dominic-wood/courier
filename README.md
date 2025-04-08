@@ -1,54 +1,66 @@
-# React + TypeScript + Vite
+# Courier – API Toolkit 📨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Courier is a lightweight Postman-style HTTP client built with React, TypeScript, and Tailwind CSS.  
+It allows developers to quickly compose and test API requests with a clean, focused interface.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Courier Screenshot](./public/courier-logo-large.png)
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🔗 Supports `GET`, `POST`, `PUT`, `DELETE`, and `PATCH` methods
+- 📦 Custom headers input
+- 📝 JSON body editor (auto-disabled for `GET`)
+- 🎯 Response viewer with:
+  - ✅ Status code
+  - 🕒 Request duration
+  - 📋 Copy to clipboard
+  - ❌ Error display
+- 🖼️ Brand-aligned UI with Courier red theme (#ed1c24)
+- 📱 Fully responsive layout
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🛠️ Tech Stack
+
+- **React** + **TypeScript**
+- **Tailwind CSS**
+- **Vite** for blazing-fast development
+
+## 🧪 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/your-username/courier.git
+cd courier
+```
+### 2. Install dependencies
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 3. Start the dev server
+```bash
+npm run dev
 ```
+
+## 🧼  Project Structure
+```css
+src/
+  components/
+    HeaderBar.tsx
+    RequestForm.tsx
+    ResponseViewer.tsx
+  App.tsx
+  main.tsx
+  index.css
+```
+
+## 🧭 Roadmap
+- 🧠 Request history
+- 🎨 Theme switcher (dark/light)
+- 🧾 Request preview panel
+- 💾 Export/import request configs
+- 🌐 Environment variables (Dev/Prod/etc.)
+
+## 📃 License
+MIT – Use it, fork it, break it, improve it.
