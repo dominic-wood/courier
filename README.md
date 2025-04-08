@@ -1,10 +1,17 @@
-# Courier – API Toolkit 📨
+# Courier – API Toolkit 🔺
+![Release](https://img.shields.io/github/v/release/dominic-wood/courier?label=version&color=ed1c24)
+![Vercel](https://img.shields.io/badge/deployed-Vercel-black?logo=vercel)
+![License](https://img.shields.io/github/license/dominic-wood/courier?color=gray)
+![React](https://img.shields.io/badge/built%20with-React-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/language-TypeScript-3178C6?logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/styled%20with-TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)
 
 Courier is a lightweight Postman-style HTTP client built with React, TypeScript, and Tailwind CSS.  
 It allows developers to quickly compose and test API requests with a clean, focused interface.
 
-
 ![Courier Screenshot](./public/courier-logo-large.png)
+
+🔗 **Live Site**: [courierapi.vercel.app](courierapi.vercel.app)
 
 ## 🚀 Features
 
