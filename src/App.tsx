@@ -10,7 +10,7 @@ function App() {
   const [duration, setDuration] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex flex-col sm:flex-row">
       {/* Left Panel */}
       <div className="w-1/2 bg-white text-black p-0 relative flex flex-col">
         <HeaderBar />
