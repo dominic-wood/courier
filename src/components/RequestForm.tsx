@@ -13,7 +13,6 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
   const [method, setMethod] = useState('GET')
   const [body, setBody] = useState('')
   const [headers, setHeaders] = useState([{ key: '', value: '' }])
-  const [duration, setDuration] = useState<number | null>(null)
 
   const handleHeaderChange = (index: number, field: 'key' | 'value', value: string) => {
     const updated = [...headers]
@@ -35,7 +34,6 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
     onError('')
     onResponse('')
     onStatus(null)
-    setDuration(null)
 
     try {
       const headerObj: Record<string, string> = {}
