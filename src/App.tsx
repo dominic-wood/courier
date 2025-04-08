@@ -7,6 +7,7 @@ function App() {
   const [response, setResponse] = useState('')
   const [error, setError] = useState('')
   const [status, setStatus] = useState<number | null>(null)
+  const [duration, setDuration] = useState<number | null>(null)
 
   return (
     <div className="min-h-screen flex">
@@ -18,6 +19,7 @@ function App() {
             onResponse={setResponse}
             onError={setError}
             onStatus={setStatus}
+            onDuration={setDuration}
           />
         </div>
         <img
@@ -29,7 +31,8 @@ function App() {
 
       {/* Right Panel */}
       <div className="w-1/2 bg-gray-900 text-white p-6 overflow-y-auto">
-        <ResponseViewer response={response} error={error} status={status} />
+      <ResponseViewer response={response} error={error} status={status} duration={duration}/>
+
       </div>
     </div>
   )

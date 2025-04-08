@@ -5,9 +5,10 @@ interface ResponseViewerProps {
   response: string
   error: string
   status: number | null
+  duration: number | null
 }
 
-const ResponseViewer = ({ response, error, status }: ResponseViewerProps) => {
+const ResponseViewer = ({ response, error, status, duration }: ResponseViewerProps) => {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = () => {
@@ -19,11 +20,17 @@ const ResponseViewer = ({ response, error, status }: ResponseViewerProps) => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-white border-gray-700 pb-2">Response</h2>
+      <h2 className="text-2xl font-bold text-white border-b border-gray-700 pb-2">Response</h2>
 
       {status && (
         <div className="text-sm text-green-400 font-medium">
           ✅ Status: {status}
+        </div>
+      )}
+
+      {duration !== null && (
+        <div className="text-sm text-white font-medium">
+          🕒 Duration: {duration}ms
         </div>
       )}
 

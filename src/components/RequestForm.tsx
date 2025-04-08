@@ -5,9 +5,10 @@ interface RequestFormProps {
   onResponse: (response: string) => void
   onError: (error: string) => void
   onStatus: (status: number | null) => void
+  onDuration: (duration: number | null) => void
 }
 
-const RequestForm = ({ onResponse, onError, onStatus }: RequestFormProps) => {
+const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormProps) => {
   const [url, setUrl] = useState('')
   const [method, setMethod] = useState('GET')
   const [body, setBody] = useState('')
@@ -56,7 +57,8 @@ const RequestForm = ({ onResponse, onError, onStatus }: RequestFormProps) => {
       const start = performance.now()
       const res = await fetch(url, options)
       const end = performance.now()
-      setDuration(Math.round(end - start))
+     
+      onDuration(Math.round(end - start))
 
       const text = await res.text()
 
@@ -163,10 +165,6 @@ const RequestForm = ({ onResponse, onError, onStatus }: RequestFormProps) => {
       >
         Send Request
       </button>
-
-      {duration !== null && (
-        <div className="text-sm text-black">🕒 Request completed in {duration}ms</div>
-      )}
     </form>
   )
 }
