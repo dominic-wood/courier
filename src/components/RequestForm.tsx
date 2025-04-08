@@ -170,11 +170,26 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
         </button>
       </form>
 
-      <div className="mt-8 text-center text-xs text-gray-400">
-        <img src="/courier-icon.png" alt="Courier Logo" className="h-6 mx-auto mb-1 opacity-100" />
+      <div className="mt-8 pt-4 text-center text-xs text-gray-400 animate-fade-in">
+        <img
+          src="/courier-icon.png"
+          alt="Courier Logo"
+          className="h-6 mx-auto mb-2 opacity-90 hover:opacity-100 transition duration-300"
+        />
         <p>© 2025 Courier – API Toolkit</p>
-        <p>Created by Dominic Wood</p>
+        <p>
+          Created by{' '}
+          <a
+            href="https://github.com/dominic-wood"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#ed1c24] hover:underline transition"
+          >
+            Dominic Wood
+          </a>
+        </p>
       </div>
+
     </div>
   )
 }
