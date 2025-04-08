@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col sm:flex-row">
       {/* Left Panel */}
-      <div className="w-1/2 bg-white text-black p-0 relative flex flex-col">
+      <div className="w-full sm:w-1/2 bg-white text-black p-0 relative flex flex-col">
         <HeaderBar />
         <div className="flex-1 p-6">
           <RequestForm
@@ -30,7 +30,7 @@ function App() {
       </div>
 
       {/* Right Panel */}
-      <div className="w-1/2 bg-gray-900 text-white p-6 overflow-y-auto">
+      <div className="w-full sm:w-1/2 bg-gray-900 text-white p-6 overflow-y-auto flex-1 min-h-[50vh]">
       <ResponseViewer response={response} error={error} status={status} duration={duration}/>
 
       </div>
