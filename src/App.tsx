@@ -2,12 +2,14 @@ import { useState } from 'react'
 import RequestForm from './components/RequestForm'
 import ResponseViewer from './components/ResponseViewer'
 import HeaderBar from './components/HeaderBar'
+import BottomSheet from './components/BottomSheet'
 
 function App() {
   const [response, setResponse] = useState('')
   const [error, setError] = useState('')
   const [status, setStatus] = useState<number | null>(null)
   const [duration, setDuration] = useState<number | null>(null)
+  const [showSheet, setShowSheet] = useState(false)
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row">
@@ -16,8 +18,14 @@ function App() {
         <HeaderBar />
         <div className="flex-1 p-6">
           <RequestForm
-            onResponse={setResponse}
-            onError={setError}
+            onResponse={(res) => {
+              setResponse(res)
+              setShowSheet(true)
+            }}
+            onError={(err) => {
+              setError(err)
+              setShowSheet(true)
+            }}
             onStatus={setStatus}
             onDuration={setDuration}
           />
@@ -30,10 +38,14 @@ function App() {
       </div>
 
       {/* Right Panel */}
-      <div className="w-full sm:w-1/2 bg-gray-900 text-white p-6 overflow-y-auto flex-1 min-h-[50vh]">
-      <ResponseViewer response={response} error={error} status={status} duration={duration}/>
-
+      <div className="hidden sm:block w-full sm:w-1/2 bg-gray-900 text-white p-6 overflow-y-auto flex-1 min-h-[50vh]">
+        <ResponseViewer response={response} error={error} status={status} duration={duration} />
       </div>
+
+      {/* Mobile Bottom Sheet */}
+      <BottomSheet open={showSheet} onClose={() => setShowSheet(false)}>
+        <ResponseViewer response={response} error={error} status={status} duration={duration} />
+      </BottomSheet>
     </div>
   )
 }
