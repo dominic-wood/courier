@@ -17,7 +17,7 @@ function App() {
       {/* Left Panel */}
       <div className="w-full sm:w-1/2 bg-white text-black p-0 flex flex-col">
         <HeaderBar />
-        <div className="flex-1 flex flex-col p-6 overflow-y-auto min-h-screen sm:min-h-0 h-[calc(100svh-64px)]">
+        <div className="flex-grow flex flex-col p-6 overflow-y-auto h-[calc(100svh-64px)] sm:h-auto">
           <RequestForm
             onResponse={(res) => {
               setResponse(res)
