@@ -171,7 +171,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
       </form>
 
       <div className="mt-8 text-center text-xs text-gray-400">
-        <img src="/courier-logo.png" alt="Courier Logo" className="h-6 mx-auto mb-1 opacity-70" />
+        <img src="/courier-icon.png" alt="Courier Logo" className="h-6 mx-auto mb-1 opacity-100" />
         <p>© 2025 Courier – API Toolkit</p>
         <p>Created by Dominic Wood</p>
       </div>
