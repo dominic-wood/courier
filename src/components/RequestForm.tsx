@@ -82,92 +82,100 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block mb-1 font-medium text-black">Request URL</label>
-        <input
-          type="text"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="https://example.com/api"
-          className="w-full px-4 py-2 border border-black rounded-md"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1 font-medium text-black">Method</label>
-        <select
-          value={method}
-          onChange={(e) => setMethod(e.target.value)}
-          className="w-full px-4 py-2 border border-black rounded-md"
-        >
-          <option>GET</option>
-          <option>POST</option>
-          <option>PUT</option>
-          <option>DELETE</option>
-          <option>PATCH</option>
-        </select>
-      </div>
-
-      <div>
-        <label className="block mb-1 font-medium text-black">Headers</label>
-        <div className="space-y-2">
-          {headers.map((header, index) => (
-            <div key={index} className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Header Key"
-                value={header.key}
-                onChange={(e) => handleHeaderChange(index, 'key', e.target.value)}
-                className="w-1/2 px-3 py-1 border border-black rounded"
-              />
-              <input
-                type="text"
-                placeholder="Header Value"
-                value={header.value}
-                onChange={(e) => handleHeaderChange(index, 'value', e.target.value)}
-                className="w-1/2 px-3 py-1 border border-black rounded"
-              />
-              <button
-                type="button"
-                onClick={() => removeHeader(index)}
-                className="text-red-600 hover:text-red-800"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addHeader}
-            className="text-[#ed1c24] hover:underline text-sm"
-          >
-            + Add Header
-          </button>
+    <div className="flex flex-col justify-between h-full">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block mb-1 font-medium text-black">Request URL</label>
+          <input
+            type="text"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="https://example.com/api"
+            className="w-full px-4 py-2 border border-black rounded-md"
+            required
+          />
         </div>
-      </div>
 
-      <div>
-        <label className="block mb-1 font-medium text-black">Request Body (JSON)</label>
-        <textarea
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          placeholder={`{
+        <div>
+          <label className="block mb-1 font-medium text-black">Method</label>
+          <select
+            value={method}
+            onChange={(e) => setMethod(e.target.value)}
+            className="w-full px-4 py-2 border border-black rounded-md"
+          >
+            <option>GET</option>
+            <option>POST</option>
+            <option>PUT</option>
+            <option>DELETE</option>
+            <option>PATCH</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium text-black">Headers</label>
+          <div className="space-y-2">
+            {headers.map((header, index) => (
+              <div key={index} className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Header Key"
+                  value={header.key}
+                  onChange={(e) => handleHeaderChange(index, 'key', e.target.value)}
+                  className="w-1/2 px-3 py-1 border border-black rounded"
+                />
+                <input
+                  type="text"
+                  placeholder="Header Value"
+                  value={header.value}
+                  onChange={(e) => handleHeaderChange(index, 'value', e.target.value)}
+                  className="w-1/2 px-3 py-1 border border-black rounded"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeHeader(index)}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addHeader}
+              className="text-[#ed1c24] hover:underline text-sm"
+            >
+              + Add Header
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium text-black">Request Body (JSON)</label>
+          <textarea
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            placeholder={`{
   "title": "Hello World"
 }`}
-          className="w-full px-4 py-2 border border-black rounded-md font-mono text-sm min-h-[150px]"
-          disabled={method === 'GET'}
-        />
-      </div>
+            className="w-full px-4 py-2 border border-black rounded-md font-mono text-sm min-h-[150px]"
+            disabled={method === 'GET'}
+          />
+        </div>
 
-      <button
-        type="submit"
-        className="bg-[#ed1c24] text-white px-6 py-2 rounded-md hover:bg-red-700"
-      >
-        Send Request
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="bg-[#ed1c24] text-white px-6 py-2 rounded-md hover:bg-red-700"
+        >
+          Send Request
+        </button>
+      </form>
+
+      <div className="mt-8 text-center text-xs text-gray-400">
+        <img src="/courier-logo.png" alt="Courier Logo" className="h-6 mx-auto mb-1 opacity-70" />
+        <p>© 2025 Courier – API Toolkit</p>
+        <p>Created by Dominic Wood</p>
+      </div>
+    </div>
   )
 }
 

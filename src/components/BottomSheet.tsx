@@ -61,7 +61,7 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
       <div
         id="bottom-sheet"
         ref={sheetRef}
-        className="bg-gray-900 text-white rounded-t-2xl shadow-lg overflow-y-auto relative"
+        className="bg-gray-900 text-white rounded-t-2xl shadow-lg relative flex flex-col"
         style={{ height: sheetHeight }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -69,7 +69,7 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
       >
         <div
           className="w-full flex justify-center items-center py-2 cursor-pointer"
-          onClick={() => setSnapped(snapped === 'full' ? 'half' : 'full')}
+          onClick={(e) => { e.stopPropagation(); setSnapped(snapped === 'full' ? 'half' : 'full') }}
         >
           <div className="w-12 h-1.5 bg-gray-500 rounded-full" />
         </div>
@@ -79,7 +79,7 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
         >
           ✕
         </button>
-        <div className="p-4">{children}</div>
+        <div className="p-4 flex-1 flex flex-col justify-between overflow-y-auto">{children}</div>
       </div>
     </div>
   )

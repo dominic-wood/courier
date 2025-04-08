@@ -14,9 +14,9 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col sm:flex-row">
       {/* Left Panel */}
-      <div className="w-full sm:w-1/2 bg-white text-black p-0 relative flex flex-col">
+      <div className="w-full sm:w-1/2 bg-white text-black p-0 flex flex-col">
         <HeaderBar />
-        <div className="flex-1 p-6">
+        <div className="flex-1 flex flex-col p-6 overflow-y-auto min-h-screen sm:min-h-0">
           <RequestForm
             onResponse={(res) => {
               setResponse(res)
@@ -30,21 +30,26 @@ function App() {
             onDuration={setDuration}
           />
         </div>
-        <img
-          src="/courier-logo.png"
-          alt="Courier Logo"
-          className="absolute bottom-4 right-4 w-28 transition duration-300 drop-shadow"
-        />
       </div>
 
       {/* Right Panel */}
-      <div className="hidden sm:block w-full sm:w-1/2 bg-gray-900 text-white p-6 overflow-y-auto flex-1 min-h-[50vh]">
-        <ResponseViewer response={response} error={error} status={status} duration={duration} />
+      <div className="hidden sm:block w-1/2 bg-gray-900 text-white p-6 overflow-y-auto">
+        <ResponseViewer
+          response={response}
+          error={error}
+          status={status}
+          duration={duration}
+        />
       </div>
 
-      {/* Mobile Bottom Sheet */}
+      {/* Mobile Bottom Sheet Viewer */}
       <BottomSheet open={showSheet} onClose={() => setShowSheet(false)}>
-        <ResponseViewer response={response} error={error} status={status} duration={duration} />
+        <ResponseViewer
+          response={response}
+          error={error}
+          status={status}
+          duration={duration}
+        />
       </BottomSheet>
     </div>
   )
