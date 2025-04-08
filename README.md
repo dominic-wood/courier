@@ -9,9 +9,9 @@
 Courier is a lightweight Postman-style HTTP client built with React, TypeScript, and Tailwind CSS.  
 It allows developers to quickly compose and test API requests with a clean, focused interface.
 
-![Courier Screenshot](./public/courier-logo-large.png)
+![Courier Logo](./public/courier-logo-large.png)
 
-🔗 **Live Site**: [courierapi.vercel.app](courierapi.vercel.app)
+🔗 **Live Site**: [courierapi.vercel.app](https://courierapi.vercel.app)
 
 ## 🚀 Features
 
