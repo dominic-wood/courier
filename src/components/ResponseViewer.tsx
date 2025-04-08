@@ -5,24 +5,22 @@ interface ResponseViewerProps {
   error: string
   status: number | null
   duration: number | null
+  isLoading: boolean
 }
 
-const ResponseViewer = ({ response, error, status, duration }: ResponseViewerProps) => {
+const ResponseViewer = ({ response, error, status, duration, isLoading }: ResponseViewerProps) => {
   const [copied, setCopied] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   // Auto-scroll on response
   useEffect(() => {
     if ((response || error) && containerRef.current) {
       containerRef.current.scrollIntoView({ behavior: 'smooth' })
-      setIsLoading(false)
     }
   }, [response, error])
 
   useEffect(() => {
     if (status === null && !error && !response) {
-      setIsLoading(true)
     }
   }, [status, error, response])
 
@@ -53,6 +51,7 @@ const ResponseViewer = ({ response, error, status, duration }: ResponseViewerPro
           Sending request...
         </div>
       )}
+
 
       {/* Status / Duration / Error */}
       <div className="space-y-2">

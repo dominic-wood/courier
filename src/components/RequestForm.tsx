@@ -6,9 +6,10 @@ interface RequestFormProps {
   onError: (error: string) => void
   onStatus: (status: number | null) => void
   onDuration: (duration: number | null) => void
+  onLoading: () => void
 }
 
-const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormProps) => {
+const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: RequestFormProps) => {
   const [url, setUrl] = useState('https://')
   const [method, setMethod] = useState('GET')
   const [body, setBody] = useState('')
@@ -31,6 +32,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    onLoading()
     onError('')
     onResponse('')
     onStatus(null)

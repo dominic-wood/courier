@@ -10,45 +10,57 @@ function App() {
   const [status, setStatus] = useState<number | null>(null)
   const [duration, setDuration] = useState<number | null>(null)
   const [showSheet, setShowSheet] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row">
       {/* Left Panel */}
       <div className="w-full sm:w-1/2 bg-white text-black p-0 flex flex-col">
         <HeaderBar />
-        <div className="flex-grow flex flex-col p-6 overflow-y-auto h-[calc(100svh-64px)] sm:h-auto">
+        <div className="flex-1 flex flex-col p-6 overflow-y-auto min-h-screen sm:min-h-0 h-[calc(100svh-64px)]">
           <RequestForm
             onResponse={(res) => {
               setResponse(res)
               setShowSheet(true)
+              setIsLoading(false)
             }}
             onError={(err) => {
               setError(err)
               setShowSheet(true)
+              setIsLoading(false)
             }}
             onStatus={setStatus}
             onDuration={setDuration}
+            onLoading={() => {
+              setIsLoading(true)
+              setResponse('')
+              setError('')
+              setStatus(null)
+              setDuration(null)
+            }}
           />
         </div>
       </div>
 
-      {/* Right Panel */}
+      {/* Right Panel (Desktop Only) */}
       <div className="hidden sm:block w-1/2 bg-gray-900 text-white p-6 overflow-y-auto">
         <ResponseViewer
           response={response}
           error={error}
           status={status}
           duration={duration}
+          isLoading={isLoading}
         />
       </div>
 
-      {/* Mobile Bottom Sheet Viewer */}
+      {/* Bottom Sheet (Mobile Only) */}
       <BottomSheet open={showSheet} onClose={() => setShowSheet(false)}>
         <ResponseViewer
           response={response}
           error={error}
           status={status}
           duration={duration}
+          isLoading={isLoading}
         />
       </BottomSheet>
     </div>
