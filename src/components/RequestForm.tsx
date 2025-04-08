@@ -9,7 +9,7 @@ interface RequestFormProps {
 }
 
 const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormProps) => {
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState('https://')
   const [method, setMethod] = useState('GET')
   const [body, setBody] = useState('')
   const [headers, setHeaders] = useState([{ key: '', value: '' }])
@@ -52,10 +52,14 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
         options.body = body
       }
 
+      const finalUrl = /^(http|https):\/\//.test(url)
+        ? url
+        : `https://${url}`
+
       const start = performance.now()
-      const res = await fetch(url, options)
+      const res = await fetch(finalUrl, options)
       const end = performance.now()
-     
+
       onDuration(Math.round(end - start))
 
       const text = await res.text()
@@ -85,7 +89,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
           type="text"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="https://jsonplaceholder.typicode.com/posts"
+          placeholder="https://example.com/api"
           className="w-full px-4 py-2 border border-black rounded-md"
           required
         />
