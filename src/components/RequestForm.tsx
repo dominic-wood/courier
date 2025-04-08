@@ -65,7 +65,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration }: RequestFormP
       const text = await res.text()
 
       if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`)
+        throw new Error(`HTTP ${res.status}: ${res.statusText || 'Something went wrong'}`)
       }
 
       onStatus(res.status)
