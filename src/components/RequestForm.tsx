@@ -1,5 +1,7 @@
 // src/components/RequestForm.tsx
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import RequestHistory, { RequestEntry } from './RequestHistory'
 
 interface RequestFormProps {
   onResponse: (response: string) => void
@@ -14,6 +16,11 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
   const [method, setMethod] = useState('GET')
   const [body, setBody] = useState('')
   const [headers, setHeaders] = useState([{ key: '', value: '' }])
+
+  const handleHistorySelect = (entry: RequestEntry) => {
+    setUrl(entry.url)
+    setMethod(entry.method)
+  }
 
   const handleHeaderChange = (index: number, field: 'key' | 'value', value: string) => {
     const updated = [...headers]
@@ -54,9 +61,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         options.body = body
       }
 
-      const finalUrl = /^(http|https):\/\//.test(url)
-        ? url
-        : `https://${url}`
+      const finalUrl = /^(http|https):\/\//.test(url) ? url : `https://${url}`
 
       const start = performance.now()
       const res = await fetch(finalUrl, options)
@@ -78,6 +83,20 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
       } catch {
         onResponse(text)
       }
+
+      // Save to request history
+      const entry: RequestEntry = {
+        id: uuidv4(),
+        url: finalUrl,
+        method,
+        timestamp: new Date().toISOString(),
+      }
+
+      const existing = localStorage.getItem('requestHistory')
+      const history: RequestEntry[] = existing ? JSON.parse(existing) : []
+      const updatedHistory = [entry, ...history.slice(0, 19)]
+      localStorage.setItem('requestHistory', JSON.stringify(updatedHistory))
+      window.dispatchEvent(new Event('request-history-updated'))
     } catch (err: any) {
       onError(err.message || 'Request failed')
     }
@@ -159,19 +178,25 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
             placeholder={`{
   "title": "Hello World"
 }`}
-            className="w-full px-4 py-2 border border-black rounded-md font-mono text-sm min-h-[150px]"
+            className="w-full px-4 py-2 border border-black rounded-md font-mono text-sm min-h-[100px]"
             disabled={method === 'GET'}
           />
         </div>
 
+      <div className="flex justify-end">
         <button
           type="submit"
           className="bg-[#ed1c24] text-white px-6 py-2 rounded-md hover:bg-red-700"
         >
           Send Request
         </button>
+      </div>
       </form>
 
+      {/* Request History */}
+      <RequestHistory onSelect={handleHistorySelect} />
+
+      {/* Footer */}
       <div className="mt-8 pt-4 text-center text-xs text-gray-400 animate-fade-in">
         <img
           src="/courier-icon.png"
@@ -191,7 +216,6 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
           </a>
         </p>
       </div>
-
     </div>
   )
 }

@@ -43,15 +43,27 @@ function App() {
       </div>
 
       {/* Right Panel (Desktop Only) */}
-      <div className="hidden sm:block w-1/2 bg-gray-900 text-white p-6 overflow-y-auto">
-        <ResponseViewer
-          response={response}
-          error={error}
-          status={status}
-          duration={duration}
-          isLoading={isLoading}
-        />
+      <div className="hidden sm:flex flex-col w-1/2 bg-gray-900 text-white">
+        <div className="py-4 px-4 flex justify-center items-center">
+          <img
+            src="/response-logo-2.png"
+            alt="Response Logo"
+            className="h-10 w-auto"
+          />
+        </div>
+
+        <div className="flex-1 p-6 overflow-y-auto">
+          <ResponseViewer
+            response={response}
+            error={error}
+            status={status}
+            duration={duration}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
+
+
 
       {/* Bottom Sheet (Mobile Only) */}
       <BottomSheet open={showSheet} onClose={() => setShowSheet(false)}>

@@ -2,7 +2,7 @@
 
 const HeaderBar = () => {
   return (
-    <header className="bg-white py-3 px-4 flex justify-center items-center">
+    <header className="bg-white py-4 px-4 flex justify-center items-center">
       <img
         src="/courier-logo.png"
         alt="Courier Logo"
