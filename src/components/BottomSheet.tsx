@@ -54,24 +54,21 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
     >
       <div
         ref={sheetRef}
-        className="bg-gray-900 text-white rounded-t-2xl shadow-lg relative flex flex-col"
+        className="bg-gray-900 text-white rounded-t-2xl shadow-lg flex flex-col"
         style={{ height: sheetHeight }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Header Logo + Close */}
-        <div className="relative pt-4 pb-5 flex items-center justify-center">
-          {/* Centered Logo */}
+        {/* Header */}
+        <div className="relative flex items-center justify-center py-5 px-4 ">
           <img
             src="/response-logo-2.png"
             alt="Response Logo"
-            className="h-6 opacity-90 mx-auto"
+            className="h-6 opacity-90"
           />
-
-          {/* Close Button aligned right but inline */}
           <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-2xl leading-none px-3 py-2"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-2xl px-3 py-2"
             onClick={onClose}
             aria-label="Close"
           >
@@ -81,7 +78,7 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
 
         {/* Handle */}
         <div
-          className="w-full flex justify-center items-center pb-2"
+          className="w-full flex justify-center items-center py-2"
           onClick={(e) => {
             e.stopPropagation()
             setSnapped(snapped === 'full' ? 'half' : 'full')
@@ -90,8 +87,8 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
           <div className="w-12 h-1.5 bg-gray-500 rounded-full" />
         </div>
 
-        {/* Content */}
-        <div className="p-4 flex-1 flex flex-col justify-between overflow-y-auto">
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto p-4">
           {children}
         </div>
       </div>
