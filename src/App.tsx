@@ -44,7 +44,7 @@ function App() {
 
       {/* Right Panel (Desktop Only) */}
       <div className="hidden sm:flex flex-col w-1/2 bg-gray-900 text-white">
-        <div className="py-4 px-4 flex justify-center items-center">
+        <div className="py-5 px-4 flex justify-center items-center">
           <img
             src="/response-logo-2.png"
             alt="Response Logo"
