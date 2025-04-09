@@ -9,7 +9,6 @@ interface SplashScreenProps {
           fadeOut ? 'opacity-0' : 'opacity-100'
         }`}
       >
-  
         {/* Centered Logo and Tagline */}
         <div className="flex flex-col items-center justify-center flex-1 px-4 text-center">
           <img
@@ -22,11 +21,8 @@ interface SplashScreenProps {
           </h1>
         </div>
   
-      {/* Spacer for mobile */}
-      <div className="flex-grow sm:hidden" />
-
-        {/* Loading Dots - Always visible */}
-        <div className="mb-6">
+        {/* Loading Dots - Fixed at the bottom with safe area padding */}
+        <div className="mb-6 pb-[env(safe-area-inset-bottom)]">
           <div className="flex space-x-1">
             <span className="h-2 w-2 bg-[#ed1c24] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
             <span className="h-2 w-2 bg-[#ed1c24] rounded-full animate-bounce" style={{ animationDelay: '100ms' }} />
@@ -38,4 +34,3 @@ interface SplashScreenProps {
   }
   
   export default SplashScreen
-  
