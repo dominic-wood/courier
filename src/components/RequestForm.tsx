@@ -18,6 +18,11 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
   const [headers, setHeaders] = useState([{ key: '', value: '' }])
 
   const urlInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    urlInputRef.current?.focus()
+  }, [])
+
   // Clear body and headers when switching to GET
   useEffect(() => {
     if (method === 'GET') {
@@ -129,6 +134,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         <div>
           <label className="block mb-1 font-medium text-black">Request URL</label>
           <input
+          ref={urlInputRef}
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
