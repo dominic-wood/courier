@@ -9,7 +9,7 @@ interface SplashScreenProps {
           fadeOut ? 'opacity-0' : 'opacity-100'
         }`}
       >
-
+  
         {/* Centered Logo and Tagline */}
         <div className="flex flex-col items-center justify-center flex-1 px-4 text-center">
           <img
@@ -30,6 +30,9 @@ interface SplashScreenProps {
             <span className="h-2 w-2 bg-[#ed1c24] rounded-full animate-bounce" style={{ animationDelay: '200ms' }} />
           </div>
         </div>
+
+        {/*Spacer*/}
+        <div className="h-6 sm:h-0" />
       </div>
     )
   }
