@@ -18,14 +18,6 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
   const [headers, setHeaders] = useState([{ key: '', value: '' }])
 
   const urlInputRef = useRef<HTMLInputElement>(null)
-    useEffect(() => {
-  const input = urlInputRef.current
-  if (input) {
-    input.focus()
-    input.setSelectionRange(input.value.length, input.value.length)
-  }
-}, [])
-
   // Clear body and headers when switching to GET
   useEffect(() => {
     if (method === 'GET') {
@@ -120,16 +112,11 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         headers,
       }
 
-      urlInputRef.current?.focus()
-
       const existing = localStorage.getItem('requestHistory')
       const history: RequestEntry[] = existing ? JSON.parse(existing) : []
       const updatedHistory = [entry, ...history.slice(0, 19)]
       localStorage.setItem('requestHistory', JSON.stringify(updatedHistory))
       window.dispatchEvent(new Event('request-history-updated'))
-
-      // refocus the URL input
-      urlInputRef.current?.focus()
 
     } catch (err: any) {
       onError(err.message || 'Request failed')
@@ -142,7 +129,6 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         <div>
           <label className="block mb-1 font-medium text-black">Request URL</label>
           <input
-            ref={urlInputRef}
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
