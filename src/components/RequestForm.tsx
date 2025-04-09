@@ -36,13 +36,6 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
     setMethod(entry.method)
     setHeaders(entry.headers || [{ key: '', value: '' }])
     setBody(entry.body || '')
-    setTimeout(() => {
-      const input = urlInputRef.current
-      if (input) {
-        input.focus()
-        input.setSelectionRange(input.value.length, input.value.length)
-      }
-    }, 0)
   }
 
   const handleHeaderChange = (index: number, field: 'key' | 'value', value: string) => {
