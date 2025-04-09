@@ -18,13 +18,21 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
   const [headers, setHeaders] = useState([{ key: '', value: '' }])
 
   const urlInputRef = useRef<HTMLInputElement>(null)
+    useEffect(() => {
+  const input = urlInputRef.current
+  if (input) {
+    input.focus()
+    input.setSelectionRange(input.value.length, input.value.length)
+  }
+}, [])
+
+  // Clear body and headers when switching to GET
   useEffect(() => {
-    const input = urlInputRef.current
-    if (input) {
-      input.focus()
-      input.setSelectionRange(input.value.length, input.value.length)
+    if (method === 'GET') {
+      setBody('')
+      setHeaders([{ key: '', value: '' }])
     }
-  }, [])
+  }, [method])
   
   const handleHistorySelect = (entry: RequestEntry) => {
     setUrl(entry.url)
