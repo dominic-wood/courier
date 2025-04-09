@@ -1,6 +1,12 @@
-const SplashScreen = () => {
+interface SplashScreenProps {
+    fadeOut: boolean
+  }
+  
+  const SplashScreen = ({ fadeOut }: SplashScreenProps) => {
     return (
-      <div className="h-screen w-screen overflow-hidden flex flex-col bg-white animate-fade-in px-4">
+      <div className={`h-screen w-screen overflow-hidden flex flex-col bg-white px-4 transition-opacity duration-500 ease-in-out ${
+        fadeOut ? 'opacity-0' : 'opacity-100'
+      }`}>
         <div className="flex-grow flex flex-col justify-center items-center">
           <img
             src="/courier-logo-splash.png"
