@@ -221,7 +221,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         <img
           src="/courier-icon.png"
           alt="Courier Logo"
-          className="h-6 mx-auto mb-2 opacity-90 hover:opacity-100 transition duration-300"
+          className="h-6 mx-auto mb-2 opacity-70 hover:opacity-100 transition duration-500"
         />
         <p>© 2025 Courier – API Toolkit</p>
         <p>
