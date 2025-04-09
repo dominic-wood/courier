@@ -1,5 +1,5 @@
 // src/components/RequestForm.tsx
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import RequestHistory, { RequestEntry } from './RequestHistory'
 
@@ -17,11 +17,27 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
   const [body, setBody] = useState('')
   const [headers, setHeaders] = useState([{ key: '', value: '' }])
 
+  const urlInputRef = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    const input = urlInputRef.current
+    if (input) {
+      input.focus()
+      input.setSelectionRange(input.value.length, input.value.length)
+    }
+  }, [])
+  
   const handleHistorySelect = (entry: RequestEntry) => {
     setUrl(entry.url)
     setMethod(entry.method)
-    if (entry.body !== undefined) setBody(entry.body)
-    if (entry.headers && entry.headers.length > 0) setHeaders(entry.headers)
+    setHeaders(entry.headers || [{ key: '', value: '' }])
+    setBody(entry.body || '')
+    setTimeout(() => {
+      const input = urlInputRef.current
+      if (input) {
+        input.focus()
+        input.setSelectionRange(input.value.length, input.value.length)
+      }
+    }, 0)
   }
 
   const handleHeaderChange = (index: number, field: 'key' | 'value', value: string) => {
@@ -96,11 +112,17 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         headers,
       }
 
+      urlInputRef.current?.focus()
+
       const existing = localStorage.getItem('requestHistory')
       const history: RequestEntry[] = existing ? JSON.parse(existing) : []
       const updatedHistory = [entry, ...history.slice(0, 19)]
       localStorage.setItem('requestHistory', JSON.stringify(updatedHistory))
       window.dispatchEvent(new Event('request-history-updated'))
+
+      // refocus the URL input
+      urlInputRef.current?.focus()
+
     } catch (err: any) {
       onError(err.message || 'Request failed')
     }
@@ -112,6 +134,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         <div>
           <label className="block mb-1 font-medium text-black">Request URL</label>
           <input
+            ref={urlInputRef}
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
