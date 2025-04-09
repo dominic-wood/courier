@@ -22,6 +22,9 @@ interface SplashScreenProps {
           </h1>
         </div>
   
+      {/* Spacer for mobile */}
+      <div className="flex-grow sm:hidden" />
+
         {/* Loading Dots - Always visible */}
         <div className="mb-6">
           <div className="flex space-x-1">
@@ -30,9 +33,6 @@ interface SplashScreenProps {
             <span className="h-2 w-2 bg-[#ed1c24] rounded-full animate-bounce" style={{ animationDelay: '200ms' }} />
           </div>
         </div>
-
-        {/*Spacer*/}
-        <div className="h-6 sm:h-0" />
       </div>
     )
   }
