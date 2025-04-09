@@ -20,6 +20,8 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
   const handleHistorySelect = (entry: RequestEntry) => {
     setUrl(entry.url)
     setMethod(entry.method)
+    if (entry.body !== undefined) setBody(entry.body)
+    if (entry.headers && entry.headers.length > 0) setHeaders(entry.headers)
   }
 
   const handleHeaderChange = (index: number, field: 'key' | 'value', value: string) => {
@@ -90,6 +92,8 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         url: finalUrl,
         method,
         timestamp: new Date().toISOString(),
+        body,
+        headers,
       }
 
       const existing = localStorage.getItem('requestHistory')

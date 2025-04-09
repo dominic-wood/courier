@@ -5,6 +5,8 @@ export interface RequestEntry {
   url: string
   method: string
   timestamp: string
+  body?: string
+  headers?: {key: string, value: string}[]
 }
 
 interface RequestHistoryProps {
