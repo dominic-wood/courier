@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import RequestForm from './components/RequestForm'
 import ResponseViewer from './components/ResponseViewer'
 import HeaderBar from './components/HeaderBar'
@@ -12,8 +12,16 @@ function App() {
   const [showSheet, setShowSheet] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
+  useEffect(() => {
+    if (showSheet) {
+      document.body.classList.add('bg-gray-900')
+    } else {
+      document.body.classList.remove('bg-gray-900')
+    }
+  }, [showSheet])
+
   return (
-    <div className="min-h-screen flex flex-col sm:flex-row">
+    <div className="min-h-screen flex flex-col sm:flex-row bg-white">
       {/* Left Panel */}
       <div className="w-full sm:w-1/2 bg-white text-black p-0 flex flex-col">
         <HeaderBar />
@@ -43,27 +51,15 @@ function App() {
       </div>
 
       {/* Right Panel (Desktop Only) */}
-      <div className="hidden sm:flex flex-col w-1/2 bg-gray-900 text-white">
-        <div className="py-5 px-4 flex justify-center items-center">
-          <img
-            src="/response-logo-2.png"
-            alt="Response Logo"
-            className="h-10 w-auto"
-          />
-        </div>
-
-        <div className="flex-1 p-6 overflow-y-auto">
-          <ResponseViewer
-            response={response}
-            error={error}
-            status={status}
-            duration={duration}
-            isLoading={isLoading}
-          />
-        </div>
+      <div className="hidden sm:block w-1/2 bg-gray-900 text-white p-6 overflow-y-auto">
+        <ResponseViewer
+          response={response}
+          error={error}
+          status={status}
+          duration={duration}
+          isLoading={isLoading}
+        />
       </div>
-
-
 
       {/* Bottom Sheet (Mobile Only) */}
       <BottomSheet open={showSheet} onClose={() => setShowSheet(false)}>
