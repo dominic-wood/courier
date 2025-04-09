@@ -4,7 +4,7 @@ interface SplashScreenProps {
   
   const SplashScreen = ({ fadeOut }: SplashScreenProps) => {
     return (
-      <div className={`h-screen w-screen flex flex-col items-center justify-center bg-white relative animate-fade-in ${fadeOut ? 'animate-fade-out' : ''}`}>
+      <div className={`min-h-screen w-screen flex flex-col items-center justify-center bg-white relative animate-fade-in ${fadeOut ? 'animate-fade-out' : ''}`}>
         <img
           src="/courier-logo-splash.png"
           alt="Courier Logo"
