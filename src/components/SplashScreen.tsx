@@ -22,7 +22,7 @@ interface SplashScreenProps {
             </h1>
           </div>
   
-          {/* Loading Dots - Fixed at the bottom */}
+          {/* Loading Dots */}
           <div className="absolute bottom-0 w-full pb-6 mb-[env(safe-area-inset-bottom)] flex justify-center">
             <div className="flex space-x-1">
               <span className="h-2 w-2 bg-[#ed1c24] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />

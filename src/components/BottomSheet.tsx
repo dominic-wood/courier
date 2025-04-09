@@ -10,7 +10,6 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
   const sheetRef = useRef<HTMLDivElement>(null)
   const [startY, setStartY] = useState<number | null>(null)
   const [dragY, setDragY] = useState(0)
-  const [snapped, setSnapped] = useState<'half' | 'full'>('half')
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -36,14 +35,9 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
 
   const handleTouchEnd = () => {
     if (dragY > 150) onClose()
-    else if (dragY > 50) setSnapped('half')
-    else setSnapped('full')
-
     setStartY(null)
     setDragY(0)
   }
-
-  const sheetHeight = snapped === 'full' ? '85vh' : '50vh'
 
   return (
     <div
@@ -55,13 +49,13 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
       <div
         ref={sheetRef}
         className="bg-gray-900 text-white rounded-t-2xl shadow-lg flex flex-col"
-        style={{ height: sheetHeight }}
+        style={{ height: '85vh' }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
         {/* Header */}
-        <div className="relative flex items-center justify-center py-5 px-4 ">
+        <div className="relative flex items-center justify-center py-5 px-4">
           <img
             src="/response-logo-2.png"
             alt="Response Logo"
@@ -76,21 +70,8 @@ const BottomSheet = ({ open, onClose, children }: BottomSheetProps) => {
           </button>
         </div>
 
-        {/* Handle */}
-        <div
-          className="w-full flex justify-center items-center py-2"
-          onClick={(e) => {
-            e.stopPropagation()
-            setSnapped(snapped === 'full' ? 'half' : 'full')
-          }}
-        >
-          <div className="w-12 h-1.5 bg-gray-500 rounded-full" />
-        </div>
-
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-4">
-          {children}
-        </div>
+        <div className="flex-1 overflow-y-auto p-4">{children}</div>
       </div>
     </div>
   )

@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Animations */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -25,18 +27,21 @@
   }
 }
 
+.animate-bounce-splash {
+  animation: bounce-splash 1s ease-in-out infinite;
+}
+
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .animate-fade-out {
   animation: fadeOut 0.5s ease forwards;
-}
-
-
-.animate-bounce-splash {
-  animation: bounce-splash 1s ease-in-out infinite;
 }
 
 @keyframes scaleFadeIn {
@@ -54,7 +59,7 @@
   animation: scaleFadeIn 0.6s ease-out forwards;
 }
 
-
-  body {
-    @apply bg-white;
-  }
+/* Global Styles */
+body {
+  @apply bg-white;
+}

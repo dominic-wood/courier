@@ -124,10 +124,11 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
   return (
     <div className="flex flex-col justify-between h-full">
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* URL Input */}
         <div>
           <label className="block mb-1 font-medium text-black">Request URL</label>
           <input
-          ref={urlInputRef}
+            ref={urlInputRef}
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
@@ -137,6 +138,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
           />
         </div>
 
+        {/* Method Selector */}
         <div>
           <label className="block mb-1 font-medium text-black">Method</label>
           <select
@@ -152,6 +154,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
           </select>
         </div>
 
+        {/* Headers Section */}
         <div>
           <label className="block mb-1 font-medium text-black">Headers</label>
           <div className="space-y-2">
@@ -190,6 +193,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
           </div>
         </div>
 
+        {/* Body Section */}
         <div>
           <label className="block mb-1 font-medium text-black">Request Body (JSON)</label>
           <textarea
@@ -203,14 +207,15 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
           />
         </div>
 
-      <div className="flex justify-end">
-        <button
-          type="submit"
-          className="bg-[#ed1c24] text-white px-6 py-2 rounded-md hover:bg-red-700"
-        >
-          Send Request
-        </button>
-      </div>
+        {/* Submit Button */}
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="bg-[#ed1c24] text-white px-6 py-2 rounded-md hover:bg-red-700"
+          >
+            Send Request
+          </button>
+        </div>
       </form>
 
       {/* Request History */}

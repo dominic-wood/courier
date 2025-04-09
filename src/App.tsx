@@ -39,7 +39,15 @@ function App() {
       <div className="min-h-screen flex flex-col sm:flex-row bg-white">
       {/* Left Panel */}
       <div className="w-full sm:w-1/2 bg-white text-black p-0 flex flex-col">
-        <HeaderBar />
+      <HeaderBar
+        onReset={() => {
+          setResponse('')
+          setError('')
+          setStatus(null)
+          setDuration(null)
+          setShowSheet(false)
+        }}
+      />
         <div className="flex-grow flex flex-col p-6 overflow-y-auto h-[calc(100svh-64px)] sm:h-auto">
           <RequestForm
             onResponse={(res) => {
