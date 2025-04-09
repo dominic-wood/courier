@@ -9,9 +9,7 @@ interface SplashScreenProps {
           fadeOut ? 'opacity-0' : 'opacity-100'
         }`}
       >
-        {/* Top Spacer (optional for symmetry) */}
-        <div className="h-6 sm:h-10" />
-  
+
         {/* Centered Logo and Tagline */}
         <div className="flex flex-col items-center justify-center flex-1 px-4 text-center">
           <img
