@@ -1,3 +1,5 @@
+import hljs from 'highlight.js'
+import 'highlight.js/styles/vs2015.css' // Import a theme of your choice
 import { useState, useEffect, useRef } from 'react'
 
 interface ResponseViewerProps {
@@ -6,18 +8,25 @@ interface ResponseViewerProps {
   status: number | null
   duration: number | null
   isLoading: boolean
+  contentType: string
 }
 
-const ResponseViewer = ({ response, error, status, duration, isLoading }: ResponseViewerProps) => {
+const ResponseViewer = ({ response, error, status, duration, isLoading, contentType }: ResponseViewerProps) => {
   const [copied, setCopied] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const codeRef = useRef<HTMLElement>(null)
 
-  // Auto-scroll on response
   useEffect(() => {
     if ((response || error) && containerRef.current) {
       containerRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [response, error])
+
+  useEffect(() => {
+    if (codeRef.current) {
+      hljs.highlightElement(codeRef.current)
+    }
+  }, [response, contentType])
 
   const handleCopy = () => {
     if (!response) return
@@ -32,6 +41,13 @@ const ResponseViewer = ({ response, error, status, duration, isLoading }: Respon
     if (status >= 500) return 'border-red-500 text-red-300'
     return 'border-gray-600 text-white'
   }
+
+  // Detect language for highlight.js
+  const detectedLang = contentType.includes('json')
+    ? 'json'
+    : contentType.includes('xml')
+    ? 'xml'
+    : 'plaintext'
 
   return (
     <div className="flex flex-col justify-between h-full" ref={containerRef}>
@@ -72,7 +88,7 @@ const ResponseViewer = ({ response, error, status, duration, isLoading }: Respon
           )}
         </div>
 
-        {/* JSON Response */}
+        {/* Syntax-highlighted Response */}
         {response && (
           <div className="relative">
             <button
@@ -82,11 +98,11 @@ const ResponseViewer = ({ response, error, status, duration, isLoading }: Respon
               {copied ? 'Copied!' : 'Copy'}
             </button>
 
-            <div className="bg-gray-800 p-4 rounded-md border border-gray-700 shadow-md overflow-auto max-h-[70vh]">
-              <pre className="whitespace-pre-wrap break-words text-sm text-green-300 font-mono">
+            <pre className="bg-gray-800 pt-10 p-4 rounded-md border border-gray-700 shadow-md overflow-auto sm:max-h-[61.8vh] whitespace-pre-wrap sm:whitespace-pre break-words">
+              <code ref={codeRef} className={`language-${detectedLang}`}>
                 {response}
-              </pre>
-            </div>
+              </code>
+            </pre>
           </div>
         )}
 

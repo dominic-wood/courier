@@ -63,3 +63,10 @@
 body {
   @apply bg-white;
 }
+
+/* Override highlight.js default background and padding */
+.hljs {
+  background: transparent !important;
+  padding: 0 !important;
+}
+

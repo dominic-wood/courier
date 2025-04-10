@@ -9,9 +9,10 @@ interface RequestFormProps {
   onStatus: (status: number | null) => void
   onDuration: (duration: number | null) => void
   onLoading: () => void
+  onContentType: (contentType: string) => void
 }
 
-const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: RequestFormProps) => {
+const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading, onContentType }: RequestFormProps) => {
   const [url, setUrl] = useState('https://')
   const [method, setMethod] = useState('GET')
   const [body, setBody] = useState('')
@@ -59,7 +60,8 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
     onError('')
     onResponse('')
     onStatus(null)
-
+    onContentType('')
+  
     try {
       const headerObj: Record<string, string> = {}
       headers.forEach(({ key, value }) => {
@@ -67,39 +69,45 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
           headerObj[key.trim()] = value.trim()
         }
       })
-
+  
       const options: RequestInit = {
         method,
         headers: headerObj,
       }
-
+  
       if (method !== 'GET' && body) {
         options.body = body
       }
-
+  
       const finalUrl = /^(http|https):\/\//.test(url) ? url : `https://${url}`
-
+  
       const start = performance.now()
       const res = await fetch(finalUrl, options)
       const end = performance.now()
-
+  
       onDuration(Math.round(end - start))
-
+  
+      const contentType = res.headers.get('Content-Type') || ''
+      onContentType(contentType)
+      onStatus(res.status)
+  
       const text = await res.text()
-
+  
       if (!res.ok) {
         throw new Error(`HTTP ${res.status}: ${res.statusText || 'Something went wrong'}`)
       }
-
-      onStatus(res.status)
-
+  
       try {
-        const json = JSON.parse(text)
-        onResponse(JSON.stringify(json, null, 2))
+        if (contentType.includes('application/json')) {
+          const json = JSON.parse(text)
+          onResponse(JSON.stringify(json, null, 2))
+        } else {
+          onResponse(text)
+        }
       } catch {
         onResponse(text)
       }
-
+  
       // Save to request history
       const entry: RequestEntry = {
         id: uuidv4(),
@@ -109,13 +117,13 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: R
         body,
         headers,
       }
-
+  
       const existing = localStorage.getItem('requestHistory')
       const history: RequestEntry[] = existing ? JSON.parse(existing) : []
       const updatedHistory = [entry, ...history.slice(0, 19)]
       localStorage.setItem('requestHistory', JSON.stringify(updatedHistory))
       window.dispatchEvent(new Event('request-history-updated'))
-
+  
     } catch (err: any) {
       onError(err.message || 'Request failed')
     }

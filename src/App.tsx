@@ -14,10 +14,11 @@ function App() {
   const [duration, setDuration] = useState<number | null>(null)
   const [showSheet, setShowSheet] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [contentType, setContentType] = useState('')
 
   useEffect(() => {
-    const timer = setTimeout(() => setFadeOutSplash(true), 2500) // Fade out after 1.5s
-    const removeSplash = setTimeout(() => setShowSplash(false), 3000) // Fully remove after 2s
+    const timer = setTimeout(() => setFadeOutSplash(true), 2500)
+    const removeSplash = setTimeout(() => setShowSplash(false), 3000)
     return () => {
       clearTimeout(timer)
       clearTimeout(removeSplash)
@@ -25,11 +26,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (showSheet) {
-      document.body.classList.add('bg-gray-900')
-    } else {
-      document.body.classList.remove('bg-gray-900')
-    }
+    document.body.classList.toggle('bg-gray-900', showSheet)
   }, [showSheet])
 
   if (showSplash) return <SplashScreen fadeOut={fadeOutSplash} />
@@ -37,74 +34,75 @@ function App() {
   return (
     <div className="fade-in">
       <div className="min-h-screen flex flex-col sm:flex-row bg-white">
-      {/* Left Panel */}
-      <div className="w-full sm:w-1/2 bg-white text-black p-0 flex flex-col">
-      <HeaderBar
-        onReset={() => {
-          setResponse('')
-          setError('')
-          setStatus(null)
-          setDuration(null)
-          setShowSheet(false)
-        }}
-      />
-        <div className="flex-grow flex flex-col p-6 overflow-y-auto h-[calc(100svh-64px)] sm:h-auto">
-          <RequestForm
-            onResponse={(res) => {
-              setResponse(res)
-              setShowSheet(true)
-              setIsLoading(false)
-            }}
-            onError={(err) => {
-              setError(err)
-              setShowSheet(true)
-              setIsLoading(false)
-            }}
-            onStatus={setStatus}
-            onDuration={setDuration}
-            onLoading={() => {
-              setIsLoading(true)
+        {/* Left Panel */}
+        <div className="w-full sm:w-1/2 bg-white text-black p-0 flex flex-col">
+          <HeaderBar
+            onReset={() => {
               setResponse('')
               setError('')
               setStatus(null)
               setDuration(null)
+              setShowSheet(false)
             }}
           />
+          <div className="flex-grow flex flex-col p-6 overflow-y-auto h-[calc(100svh-64px)] sm:h-auto">
+            <RequestForm
+              onResponse={(res) => {
+                setResponse(res)
+                setShowSheet(true)
+                setIsLoading(false)
+              }}
+              onError={(err) => {
+                setError(err)
+                setShowSheet(true)
+                setIsLoading(false)
+              }}
+              onStatus={setStatus}
+              onDuration={setDuration}
+              onLoading={() => {
+                setIsLoading(true)
+                setResponse('')
+                setError('')
+                setStatus(null)
+                setDuration(null)
+              }}
+              onContentType={setContentType}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Right Panel (Desktop Only) */}
-      <div className="hidden sm:flex flex-col w-1/2 bg-gray-900 text-white">
-        <div className="py-5 px-4 flex justify-center items-center">
-          <img
-            src="/response-logo-2.png"
-            alt="Response Logo"
-            className="h-10 w-auto"
-          />
+        {/* Right Panel (Desktop Only) */}
+        <div className="hidden sm:flex flex-col w-1/2 bg-gray-900 text-white">
+          <div className="py-5 px-4 flex justify-center items-center">
+            <img
+              src="/response-logo-2.png"
+              alt="Response Logo"
+              className="h-10 w-auto"
+            />
+          </div>
+          <div className="flex-grow p-6 overflow-y-auto">
+            <ResponseViewer
+              response={response}
+              error={error}
+              status={status}
+              duration={duration}
+              isLoading={isLoading}
+              contentType={contentType}
+            />
+          </div>
         </div>
 
-        <div className="flex-grow p-6 overflow-y-auto">
+        {/* Bottom Sheet (Mobile Only) */}
+        <BottomSheet open={showSheet} onClose={() => setShowSheet(false)}>
           <ResponseViewer
             response={response}
             error={error}
             status={status}
             duration={duration}
             isLoading={isLoading}
+            contentType={contentType}
           />
-        </div>
-      </div>
-
-
-      {/* Bottom Sheet (Mobile Only) */}
-      <BottomSheet open={showSheet} onClose={() => setShowSheet(false)}>
-        <ResponseViewer
-          response={response}
-          error={error}
-          status={status}
-          duration={duration}
-          isLoading={isLoading}
-        />
-      </BottomSheet>
+        </BottomSheet>
       </div>
     </div>
   )
