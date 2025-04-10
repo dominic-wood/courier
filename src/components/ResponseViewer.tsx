@@ -1,5 +1,5 @@
 import hljs from 'highlight.js'
-import 'highlight.js/styles/vs2015.css' // Import a theme of your choice
+import 'highlight.js/styles/vs2015.css'
 import { useState, useEffect, useRef } from 'react'
 
 interface ResponseViewerProps {
@@ -23,10 +23,10 @@ const ResponseViewer = ({ response, error, status, duration, isLoading, contentT
   }, [response, error])
 
   useEffect(() => {
-    if (codeRef.current) {
+    if (codeRef.current && (response || error)) {
       hljs.highlightElement(codeRef.current)
     }
-  }, [response, contentType])
+  }, [response, error, contentType])
 
   const handleCopy = () => {
     if (!response) return
@@ -42,7 +42,6 @@ const ResponseViewer = ({ response, error, status, duration, isLoading, contentT
     return 'border-gray-600 text-white'
   }
 
-  // Detect language for highlight.js
   const detectedLang = contentType.includes('json')
     ? 'json'
     : contentType.includes('xml')
@@ -52,65 +51,67 @@ const ResponseViewer = ({ response, error, status, duration, isLoading, contentT
   return (
     <div className="flex flex-col justify-between h-full" ref={containerRef}>
       <div className="space-y-6 text-sm">
-        {/* Loading Spinner */}
-        {isLoading && (
-          <div className="flex items-center gap-2 text-gray-400 text-sm animate-pulse">
-            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              />
-            </svg>
-            Sending request...
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center h-[60vh] gap-3">
+            <div className="flex items-center gap-2 text-gray-400 text-sm animate-pulse">
+              <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+              </svg>
+              <span>Sending request...</span>
+            </div>
           </div>
-        )}
+        ) : (
+          <>
+            {/* Status / Duration / Error */}
+            {(status !== null || duration !== null || error) && (
+              <div className="space-y-2">
+                {status !== null && (
+                  <div className={`bg-gray-800 border px-4 py-2 rounded flex items-center gap-2 ${getStatusStyle(status)}`}>
+                    <span>📤</span> <span>Status: {status}</span>
+                  </div>
+                )}
 
-        {/* Status / Duration / Error */}
-        <div className="space-y-2">
-          {status !== null && (
-            <div className={`bg-gray-800 border px-4 py-2 rounded flex items-center gap-2 ${getStatusStyle(status)}`}>
-              <span>📤</span> <span>Status: {status}</span>
-            </div>
-          )}
+                {duration !== null && (
+                  <div className="bg-gray-800 border border-gray-600 text-white px-4 py-2 rounded">
+                    🕒 Duration: {duration}ms
+                  </div>
+                )}
 
-          {duration !== null && (
-            <div className="bg-gray-800 border border-gray-600 text-white px-4 py-2 rounded">
-              🕒 Duration: {duration}ms
-            </div>
-          )}
+                {error && (
+                  <div className="bg-gray-800 border border-[#ed1c24] text-red-400 px-4 py-2 rounded">
+                    ❌ Error: {error}
+                  </div>
+                )}
+              </div>
+            )}
 
-          {error && (
-            <div className="bg-gray-800 border border-[#ed1c24] text-red-400 px-4 py-2 rounded">
-              ❌ Error: {error}
-            </div>
-          )}
-        </div>
+            {/* Syntax-highlighted Response */}
+            {response ? (
+              <div className="relative">
+                <button
+                  onClick={handleCopy}
+                  className="absolute top-2 right-2 text-xs px-3 py-1 rounded bg-white text-black hover:bg-gray-200 transition shadow"
+                >
+                  {copied ? 'Copied!' : 'Copy'}
+                </button>
 
-        {/* Syntax-highlighted Response */}
-        {response && (
-          <div className="relative">
-            <button
-              onClick={handleCopy}
-              className="absolute top-2 right-2 text-xs px-3 py-1 rounded bg-white text-black hover:bg-gray-200 transition shadow"
-            >
-              {copied ? 'Copied!' : 'Copy'}
-            </button>
-
-            <pre className="bg-gray-800 pt-10 p-4 rounded-md border border-gray-700 shadow-md overflow-auto sm:max-h-[61.8vh] whitespace-pre-wrap sm:whitespace-pre break-words">
-              <code ref={codeRef} className={`language-${detectedLang}`}>
-                {response}
-              </code>
-            </pre>
-          </div>
-        )}
-
-        {/* Empty state */}
-        {!response && !error && !isLoading && (
-          <p className="text-gray-400 text-sm italic">
-            Submit a request to see the response here.
-          </p>
+                <pre className="bg-gray-800 pt-10 p-4 rounded-md border border-gray-700 shadow-md overflow-auto sm:max-h-[61.8vh] whitespace-pre-wrap sm:whitespace-pre break-words">
+                  <code ref={codeRef} className={`language-${detectedLang}`}>
+                    {response}
+                  </code>
+                </pre>
+              </div>
+            ) : !error && !isLoading && (
+              <p className="text-gray-400 text-sm italic">
+                Submit a request to see the response here.
+              </p>
+            )}
+          </>
         )}
       </div>
 

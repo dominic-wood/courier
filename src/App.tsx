@@ -29,6 +29,14 @@ function App() {
     document.body.classList.toggle('bg-gray-900', showSheet)
   }, [showSheet])
 
+  const resetResponseViewer = () => {
+    setResponse('')
+    setError('')
+    setStatus(null)
+    setDuration(null)
+    setContentType('')
+  }
+
   if (showSplash) return <SplashScreen fadeOut={fadeOutSplash} />
 
   return (
@@ -38,35 +46,30 @@ function App() {
         <div className="w-full sm:w-1/2 bg-white text-black p-0 flex flex-col">
           <HeaderBar
             onReset={() => {
-              setResponse('')
-              setError('')
-              setStatus(null)
-              setDuration(null)
+              resetResponseViewer()
               setShowSheet(false)
             }}
           />
           <div className="flex-grow flex flex-col p-6 overflow-y-auto h-[calc(100svh-64px)] sm:h-auto">
             <RequestForm
-              onResponse={(res) => {
-                setResponse(res)
-                setShowSheet(true)
+              onResponse={(res, contentType) => {
                 setIsLoading(false)
+                setResponse(res)
+                setContentType(contentType)
+                setShowSheet(true)
               }}
               onError={(err) => {
+                setIsLoading(false)
                 setError(err)
                 setShowSheet(true)
-                setIsLoading(false)
               }}
               onStatus={setStatus}
               onDuration={setDuration}
               onLoading={() => {
+                resetResponseViewer()
                 setIsLoading(true)
-                setResponse('')
-                setError('')
-                setStatus(null)
-                setDuration(null)
+                setShowSheet(true)
               }}
-              onContentType={setContentType}
             />
           </div>
         </div>
@@ -82,11 +85,11 @@ function App() {
           </div>
           <div className="flex-grow p-6 overflow-y-auto">
             <ResponseViewer
+              isLoading={isLoading}
               response={response}
               error={error}
               status={status}
               duration={duration}
-              isLoading={isLoading}
               contentType={contentType}
             />
           </div>
@@ -95,11 +98,11 @@ function App() {
         {/* Bottom Sheet (Mobile Only) */}
         <BottomSheet open={showSheet} onClose={() => setShowSheet(false)}>
           <ResponseViewer
+            isLoading={isLoading}
             response={response}
             error={error}
             status={status}
             duration={duration}
-            isLoading={isLoading}
             contentType={contentType}
           />
         </BottomSheet>

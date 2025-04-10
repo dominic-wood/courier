@@ -1,18 +1,16 @@
-// src/components/RequestForm.tsx
 import { useState, useEffect, useRef } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import RequestHistory, { RequestEntry } from './RequestHistory'
 
 interface RequestFormProps {
-  onResponse: (response: string) => void
+  onResponse: (response: string, contentType: string) => void
   onError: (error: string) => void
   onStatus: (status: number | null) => void
   onDuration: (duration: number | null) => void
   onLoading: () => void
-  onContentType: (contentType: string) => void
 }
 
-const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading, onContentType }: RequestFormProps) => {
+const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading }: RequestFormProps) => {
   const [url, setUrl] = useState('https://')
   const [method, setMethod] = useState('GET')
   const [body, setBody] = useState('')
@@ -24,7 +22,6 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading, onC
     urlInputRef.current?.focus()
   }, [])
 
-  // Clear body and headers when switching to GET
   useEffect(() => {
     if (method === 'GET') {
       setBody('')
@@ -57,10 +54,6 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading, onC
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     onLoading()
-    onError('')
-    onResponse('')
-    onStatus(null)
-    onContentType('')
   
     try {
       const headerObj: Record<string, string> = {}
@@ -86,11 +79,9 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading, onC
       const end = performance.now()
   
       onDuration(Math.round(end - start))
-  
-      const contentType = res.headers.get('Content-Type') || ''
-      onContentType(contentType)
       onStatus(res.status)
   
+      const contentType = res.headers.get('Content-Type') || ''
       const text = await res.text()
   
       if (!res.ok) {
@@ -100,12 +91,12 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading, onC
       try {
         if (contentType.includes('application/json')) {
           const json = JSON.parse(text)
-          onResponse(JSON.stringify(json, null, 2))
+          onResponse(JSON.stringify(json, null, 2), contentType)
         } else {
-          onResponse(text)
+          onResponse(text, contentType)
         }
       } catch {
-        onResponse(text)
+        onResponse(text, contentType)
       }
   
       // Save to request history
@@ -126,6 +117,7 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading, onC
   
     } catch (err: any) {
       onError(err.message || 'Request failed')
+      onStatus(null)
     }
   }
 
@@ -226,10 +218,8 @@ const RequestForm = ({ onResponse, onError, onStatus, onDuration, onLoading, onC
         </div>
       </form>
 
-      {/* Request History */}
       <RequestHistory onSelect={handleHistorySelect} />
 
-      {/* Footer */}
       <div className="mt-8 pt-4 text-center text-xs text-gray-400 animate-fade-in">
         <img
           src="/courier-icon.png"
