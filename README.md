@@ -1,3 +1,5 @@
+<div align=center>
+
 # Courier – API Toolkit 🔺
 
 ![Release](https://img.shields.io/github/v/release/dominic-wood/courier?label=version&color=ed1c24)
@@ -15,6 +17,8 @@ It offers a clean, responsive interface for quickly sending HTTP requests and vi
 
 🔗 **Live Site**: [courierapi.vercel.app](https://courierapi.vercel.app)
 
+</div>
+
 ## 🚀 Features
 
 - 🔗 Supports `GET`, `POST`, `PUT`, `DELETE`, `PATCH`
@@ -28,6 +32,8 @@ It offers a clean, responsive interface for quickly sending HTTP requests and vi
 - 🎨 Courier-branded UI (`#ed1c24` red + bold type)
 
 ## 📸 Screenshots
+<div align=center>
+  
 ### 🖥️ Desktop View
 ![Courier Desktop](/public/screenshot-desktop.png)
 
@@ -37,7 +43,7 @@ It offers a clean, responsive interface for quickly sending HTTP requests and vi
   <img src="./public/screenshot-mobile.png" alt="Courier Mobile" width="45%"/>
   <img src="./public/screenshot-mobile-response.png" alt="Courier Mobile Response" width="45%"/>
 </div>
-
+</div>
 
 ## 🛠️ Tech Stack
 
