@@ -255,7 +255,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ onResponse, onError, onStatus
 
       <RequestHistory onSelect={handleHistorySelect} />
 
-      <div className="mt-8 pt-4 text-center text-xs text-gray-400 animate-fade-in">
+      <div className="pt-4 text-center text-xs text-gray-400 animate-fade-in">
         <img
           src="/courier-icon.png"
           alt="Courier Logo"

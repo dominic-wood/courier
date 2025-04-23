@@ -7,7 +7,6 @@ export interface AuthHeader {
 }
 
 interface AuthHelperProps {
-  /** Called whenever the computed auth header changes */
   onAuthChange: (header: AuthHeader) => void
 }
 
@@ -39,7 +38,6 @@ const AuthHelper: React.FC<AuthHelperProps> = ({ onAuthChange }) => {
     }
   }
 
-  // Compute and emit the Authorization header whenever relevant state changes
   useEffect(() => {
     const header: AuthHeader = {}
     if (authType === 'basic' && basicUser) {
@@ -66,72 +64,72 @@ const AuthHelper: React.FC<AuthHelperProps> = ({ onAuthChange }) => {
       </select>
 
       {authType === 'basic' && (
-        <div className="mt-2 space-y-2">
-          <input
-            type="text"
-            placeholder="Username"
-            value={basicUser}
-            onChange={e => setBasicUser(e.target.value)}
-            className="w-full px-3 py-1 border border-black rounded"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={basicPass}
-            onChange={e => setBasicPass(e.target.value)}
-            className="w-full px-3 py-1 border border-black rounded"
-          />
-        </div>
-      )}
+    <div className="mt-2 space-y-2">
+      <input
+        type="text"
+        placeholder="Username"
+        value={basicUser}
+        onChange={e => setBasicUser(e.target.value)}
+        className="w-full px-3 py-1 border border-black rounded"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={basicPass}
+        onChange={e => setBasicPass(e.target.value)}
+        className="w-full px-3 py-1 border border-black rounded"
+      />
+    </div>
+  )}
 
-      {authType === 'bearer' && (
-        <input
-          type="text"
-          placeholder="Bearer Token"
-          value={bearerToken}
-          onChange={e => setBearerToken(e.target.value)}
-          className="w-full mt-2 px-3 py-1 border border-black rounded"
-        />
-      )}
+  {authType === 'bearer' && (
+    <input
+      type="text"
+      placeholder="Bearer Token"
+      value={bearerToken}
+      onChange={e => setBearerToken(e.target.value)}
+      className="w-full mt-2 px-3 py-1 border border-black rounded"
+    />
+  )}
 
-      {authType === 'oauth2' && (
-        <div className="mt-2 space-y-2">
-          <input
-            type="url"
-            placeholder="Token URL"
-            value={oauthTokenUrl}
-            onChange={e => setOauthTokenUrl(e.target.value)}
-            className="w-full px-3 py-1 border border-black rounded"
-          />
-          <input
-            type="text"
-            placeholder="Client ID"
-            value={oauthClientId}
-            onChange={e => setOauthClientId(e.target.value)}
-            className="w-full px-3 py-1 border border-black rounded"
-          />
-          <input
-            type="password"
-            placeholder="Client Secret"
-            value={oauthClientSecret}
-            onChange={e => setOauthClientSecret(e.target.value)}
-            className="w-full px-3 py-1 border border-black rounded"
-          />
-          <button
-            type="button"
-            onClick={fetchOauthToken}
-            className="mt-1 text-[#ed1c24] hover:underline text-sm"
-          >
-            Get Token
-          </button>
-          {oauthAccessToken && (
-            <p className="text-xs text-green-600 truncate">
-              Token: {oauthAccessToken}
-            </p>
-          )}
-        </div>
+  {authType === 'oauth2' && (
+    <div className="mt-2 space-y-2">
+      <input
+        type="url"
+        placeholder="Token URL"
+        value={oauthTokenUrl}
+        onChange={e => setOauthTokenUrl(e.target.value)}
+        className="w-full px-3 py-1 border border-black rounded"
+      />
+      <input
+        type="text"
+        placeholder="Client ID"
+        value={oauthClientId}
+        onChange={e => setOauthClientId(e.target.value)}
+        className="w-full px-3 py-1 border border-black rounded"
+      />
+      <input
+        type="password"
+        placeholder="Client Secret"
+        value={oauthClientSecret}
+        onChange={e => setOauthClientSecret(e.target.value)}
+        className="w-full px-3 py-1 border border-black rounded"
+      />
+      <button
+        type="button"
+        onClick={fetchOauthToken}
+        className="mt-1 text-[#ed1c24] hover:underline text-sm"
+      >
+        Get Token
+      </button>
+      {oauthAccessToken && (
+        <p className="text-xs text-green-600 truncate">
+          Token: {oauthAccessToken}
+        </p>
       )}
     </div>
+  )}
+</div>
   )
 }
 
