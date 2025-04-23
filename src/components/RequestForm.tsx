@@ -86,6 +86,7 @@ const RequestForm: React.FC<RequestFormProps> = ({ onResponse, onError, onStatus
         if (key.trim()) headerObj[key.trim()] = value.trim()
       })
       const finalHeaders = { ...headerObj, ...authHeader }
+      console.log('🔑 Final Headers:', finalHeaders)
 
       const options: RequestInit = {
         method,
