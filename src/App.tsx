@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import SplashScreen from './components/SplashScreen'
 import RequestForm from './components/RequestForm'
 import ResponseViewer from './components/ResponseViewer'
@@ -107,6 +108,7 @@ function App() {
           />
         </BottomSheet>
       </div>
+      <Analytics />
     </div>
   )
 }
